@@ -1,54 +1,26 @@
+import kotlin.math.abs
+
 fun main() {
+
+    fun parseInput(input: List<String>): Pair<List<Int>, List<Int>> {
+        return input.map { line ->
+            val numbers = line.split("\\s+".toRegex())
+            Pair(numbers[0].toInt(), numbers[1].toInt())
+        }.unzip()
+    }
+
     fun part1(input: List<String>): Int {
-        // empty list
-        val lst1: MutableList<Int> = mutableListOf()
-        val lst2: MutableList<Int> = mutableListOf()
+        val (lst1, lst2) = parseInput(input)
+        val sortedLst1 = lst1.sorted()
+        val sortedLst2 = lst2.sorted()
 
-
-        for (line in input) {
-        val lst = line.split("\\s+".toRegex())
-            lst1.add(lst[0].toInt())
-            lst2.add(lst[1].toInt())
-        }
-
-        lst1.sort()
-        lst2.sort()
-
-        var s: Int = 0
-
-        for (i in 0..lst1.size - 1) {
-            val diff = lst1[i] - lst2[i]
-            val abs = Math.abs(diff)
-
-            s += abs
-        }
-
-        return s
+        return sortedLst1.zip(sortedLst2).sumOf { (a, b) -> abs(a - b) }
     }
 
     fun part2(input: List<String>): Int {
-        val lst1: MutableList<Int> = mutableListOf()
-        val lst2: MutableList<Int> = mutableListOf()
+        val (lst1, lst2) = parseInput(input)
 
-
-        for (line in input) {
-            val lst = line.split("\\s+".toRegex())
-            lst1.add(lst[0].toInt())
-            lst2.add(lst[1].toInt())
-        }
-
-        var s: Int = 0
-
-        for (i in 0..lst1.size - 1) {
-            val num = lst1[i]
-
-        val numTimesIn2 = lst2.count { it == num }
-
-
-            s += numTimesIn2 * num
-        }
-
-        return s
+        return lst1.sumOf { a -> a * lst2.count { it == a } }
     }
 
 //    // Test if implementation meets criteria from the description, like:
