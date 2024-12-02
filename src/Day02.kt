@@ -1,4 +1,7 @@
-import kotlin.math.abs
+// new stuff:
+// .fold, kult at de bruker currying her
+// .windowed, litt av et stdlib her
+
 
 fun main() {
 
