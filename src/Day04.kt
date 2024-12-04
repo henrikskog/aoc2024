@@ -72,11 +72,11 @@ fun main() {
         return count
     }
 
-    val testInput = readInput("Day04_test")
-    check2(18, part1(testInput))
-    check2(9, part2(testInput))
 
-    val input = readInput("Day04")
-    part1(input).println()
-    part2(input).println()
+    test("Part 1 (test)", expected = 18, actual = part1(readInput("Day04_test")))
+    println("Part 1" + part1(readInput("Day04")))
+
+    test("Part 2 (test)", expected = 9, actual = part2(readInput("Day04_test")))
+    println("Part 2" + part2(readInput("Day04")))
+
 }
