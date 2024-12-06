@@ -79,14 +79,23 @@ fun main() {
     }
 
     fun part2(input: List<String>): Int = runBlocking {
+        val timeStart = System.currentTimeMillis()
+
         var tot = 0
-        val m = input.size - 1
-        val n = input[0].length - 1
-        
-        // Generate all possible positions first
-        val positions = (0..m).flatMap { row ->
-            (0..n).map { col -> row to col }
-        }
+
+        val inputCopy1 = input.map { it.toMutableList() }.toMutableList()
+        val resultOriginal = simulateMoveGuard(inputCopy1, 100000)
+
+        // Create a list of visited positions from the original simulation
+        val positions = resultOriginal.mapIndexed { rowIndex, row ->
+            row.mapIndexed { colIndex, col ->
+                if (col == 'X') {
+                    rowIndex to colIndex
+                } else {
+                    null
+                }
+            }
+        }.flatten().filterNotNull()
 
         // Create a mutex for thread-safe counter updates
         val mutex = Mutex()
@@ -109,7 +118,9 @@ fun main() {
             }
         }.awaitAll()
         
+        println("Time taken: ${System.currentTimeMillis() - timeStart}ms")
         return@runBlocking tot
+
     }
 
 
@@ -117,6 +128,6 @@ fun main() {
     println("Part 1: " + part1(readInput("Day06")))
 
     test("Part 2 (test)", expected = 6, actual = part2(readInput("Day06_test")))
-    println("Part 2: " + part2(readInput("Day06")))
+    println("Part 2: " + part2(readInput("Day06"))) //54.224ms
 
 }
