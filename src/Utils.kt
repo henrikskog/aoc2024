@@ -25,3 +25,9 @@ fun test(name: String, expected: Int, actual: Int) {
     check(actual == expected) { "$name failed: expected $expected but got $actual" }
     println("$name: $actual")
 }
+
+fun test2(name: String, expected: Long, actual: Long) {
+    check(actual == expected) { "$name failed: expected $expected but got $actual" }
+    println("$name: $actual")
+}
+
